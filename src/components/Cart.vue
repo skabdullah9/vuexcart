@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-800 text-gray-200 fixed w-80 top-0 right-0 h-screen z-10 transform pt-24 transition-transform duration-500 ease-out flex flex-col px-5 overflow-y-auto" :class="[showCart ? 'translate-x-0' : 'translate-x-full']">
+  <div class="bg-gray-800 text-gray-200 fixed w-80 top-0 right-0 h-screen z-10 transform pt-24 transition-transform duration-500 ease-out flex flex-col px-5 overflow-y-auto" :class="[cartStatus ? 'translate-x-0' : 'translate-x-full']">
     <h3 class="text-center mb-5">Your Cart ({{cartItemCount}})</h3>
       <div class="cartItem py-2 " v-for="(item, index) in cartItems" :key="item.product.id">
         <div class="cartItemHeader flex items-start">
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props: ['showCart'],
+  
   mounted() {
     return this.$store.dispatch('getCartItems')
   },
@@ -40,6 +40,9 @@ export default {
     },
     cartTotalPrice() {
       return this.$store.getters.cartTotalPrice
+    },
+    cartStatus() {
+      return this.$store.getters.cartStatus
     }
   },
   methods: {

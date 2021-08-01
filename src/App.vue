@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div >
     <app-header :updateCart="updateCart" />
-    <div class="container mx-auto font-sans">    
-        <router-view/>
+    <div @click="closeCart" class="container mx-auto font-sans">    
+        <router-view  />
     </div>
   </div>
   
@@ -17,6 +17,11 @@ export default {
    return {
      updateCart: false
    }
+ },
+ methods: {
+   closeCart() {
+            return this.$store.dispatch('closeCart', false)
+        }
  }
 }
 </script>

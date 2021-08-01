@@ -4,8 +4,8 @@
   <div class="relative md:h-screen container px-5 pt-28 pb-20 md:py-24">
     <Notify v-if="notify" @closed="notify = false" />
     <div class="mx-auto flex flex-col lg:flex-row items-center justify-start ">
-    <div class="pt-2 md:pt-6 max-w-1/2 max-h-1/2">
-      <img alt="ecommerce"  class=" object-cover object-center rounded h-96" :src="Product.image">
+    <div class="pt-2 md:pt-6 md:w-1/3 h-96 flex items-center justify-center">
+      <img alt="ecommerce" @click.stop="zoomImg"  class=" object-cover object-bottom rounded" :class="[zoomOut ? 'h-60' : 'h-96']" :src="Product.image">
     </div>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
         <h2 class="text-sm title-font text-gray-500 tracking-widest">{{Product.category}}</h2>
@@ -74,7 +74,7 @@
         </div>
         <div class="flex">
           <span class="title-font font-medium text-2xl text-gray-900">${{Product.price}}</span>
-          <button @click="addToCart" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button>
+          <button @click.stop="addToCart" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button>
           <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
             <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5 hover:text-indigo-500 focus:text-indigo-500" viewBox="0 0 24 24">
               <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
@@ -91,7 +91,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 md:h-72 md:w-72 text-indigo-500 animate-spin" viewBox="0 0 20 20" fill="currentColor">
   <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
 </svg>
-<h1 class="text-center font-sans text-gray-800 text-3xl">Loading...</h1>
+
   </div>
   </section>
   </div>
@@ -103,7 +103,8 @@ export default {
     components: {Notify},
     data() {
       return {
-        notify: false
+        notify: false,
+        zoomOut: false
       }
     },
     props: ['id'],
@@ -114,7 +115,8 @@ export default {
     computed: {
       Product() {
         return this.$store.state.product
-      }
+      },
+
     },
     methods: {
       addToCart() {
@@ -122,10 +124,14 @@ export default {
         setTimeout(() => {
           this.notify = false
         }, 3000);
+        this.$store.dispatch('closeCart', true)
         return this.$store.dispatch('addToCart', {
           product: this.Product,
           quantity: 1
         })
+      },
+      zoomImg(){
+        this.zoomOut = !this.zoomOut
       }
     }
 }

@@ -41,6 +41,9 @@ export default createStore({
       } else {
         return 
       }
+    },
+    CLOSE_CART(state, action) {
+      state.showCart = action
     }
   },
   actions: {
@@ -63,6 +66,9 @@ export default createStore({
     },
     getCartItems({commit}) {
       commit('GET_CART')
+    },
+    closeCart({commit}, action) {
+      commit('CLOSE_CART', action)
     }
   },
   getters: {

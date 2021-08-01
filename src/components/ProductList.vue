@@ -19,7 +19,8 @@ export default {
         Products() {
             return this.$store.state.products
         }
-    }
+    },
+   
 }
 </script>
 
