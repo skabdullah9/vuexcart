@@ -1,7 +1,7 @@
 <template>
-  <div class="md:overflow-hidden md:max-h-screen">
+  <div class="">
       <section v-if="Product" class="text-gray-600 body-font overflow-hidden">
-  <div class="relative h-screen container px-5 pt-28 pb-20 md:py-24">
+  <div class="relative md:h-screen container px-5 pt-28 pb-20 md:py-24">
     <Notify v-if="notify" @closed="notify = false" />
     <div class="mx-auto flex flex-col lg:flex-row items-center justify-start ">
     <div class="pt-2 md:pt-6 max-w-1/2 max-h-1/2">
@@ -87,7 +87,12 @@
   </div>
 </section>
   <section v-else>
-    <img class="block w-full h-full" src="../assets/loading.gif" alt="">
+     <div class="min-h-screen flex justify-center items-center flex-col">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 md:h-72 md:w-72 text-indigo-500 animate-spin" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+</svg>
+<h1 class="text-center font-sans text-gray-800 text-3xl">Loading...</h1>
+  </div>
   </section>
   </div>
 </template>
@@ -103,6 +108,7 @@ export default {
     },
     props: ['id'],
     mounted() {
+        this.$store.state.product = null
         return this.$store.dispatch('getProduct', this.id)
     },
     computed: {

@@ -18,18 +18,29 @@ export default createStore({
     ADD_TO_CART(state, {product, quantity}) {
       let productExist = state.cart.find(item => item.product.id === product.id)
       if (productExist) {
-        return productExist.quantity++
+        productExist.quantity++
+        return localStorage.cart = JSON.stringify(state.cart)
       }
       state.cart.push({
         product,
         quantity
       })
+      localStorage.cart = JSON.stringify(state.cart)
     },
     DELETE_CART_ITEM(state, id) {
-      return state.cart.splice(id, 1)
+      state.cart.splice(id, 1)
+      return localStorage.cart = JSON.stringify(state.cart)
     },
     CLEAR_CART_ITEMS(state) {
-      return state.cart = []
+      state.cart = []
+      return localStorage.cart = JSON.stringify(state.cart)
+    },
+    GET_CART(state) {
+      if (localStorage.cart) {
+        state.cart = JSON.parse(localStorage.cart)
+      } else {
+        return 
+      }
     }
   },
   actions: {
@@ -49,6 +60,9 @@ export default createStore({
     },
     clearCartItems({ commit }) {
       commit('CLEAR_CART_ITEMS')
+    },
+    getCartItems({commit}) {
+      commit('GET_CART')
     }
   },
   getters: {

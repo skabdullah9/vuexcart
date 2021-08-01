@@ -1,8 +1,9 @@
 <template>
-  <div class="grid grid-cols-2 md:grid-cols-4 pt-20 my-14 gap-2 md:gap-4 items-stretch px-3 md:px-1">
+<div>
+  <div v-if="Products" class="grid grid-cols-2 md:grid-cols-4 pt-20 my-14 gap-2 md:gap-4 items-stretch px-3 md:px-1">
       <Product v-for="product in Products" :key="product.id" :product="product" />
-     
   </div>
+</div>
 </template>
 
 <script>

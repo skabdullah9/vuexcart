@@ -28,6 +28,9 @@
 <script>
 export default {
   props: ['showCart'],
+  mounted() {
+    return this.$store.dispatch('getCartItems')
+  },
   computed: {
     cartItems() {
       return this.$store.state.cart
@@ -41,7 +44,6 @@ export default {
   },
   methods: {
     deleteItem(id) {
-      // console.log(id);
       return this.$store.dispatch('deleteCartItem', id)
     },
     clearCartItems() {
