@@ -4,7 +4,7 @@
   <div class="relative md:h-screen container px-5 pt-28 pb-20 md:py-24">
     <Notify v-if="notify" @closed="notify = false" />
     <div class="mx-auto flex flex-col lg:flex-row items-center justify-start ">
-    <div class="pt-2 md:pt-6 md:w-1/3 h-96 flex items-center justify-center">
+    <div class="pt-2 md:pt-6 w-full md:w-1/3 h-96 flex items-center justify-center">
       <img alt="ecommerce" @load="setImgSize" ref="image" @click.stop="zoomImg"  class=" object-cover object-bottom rounded" :class="[zoomOut ? 'h-60' : 'h-96']" :src="Product.image">
     </div>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
