@@ -5,7 +5,7 @@
     <Notify v-if="notify" @closed="notify = false" />
     <div class="mx-auto flex flex-col lg:flex-row items-center justify-start ">
     <div class="pt-2 md:pt-6 md:w-1/3 h-96 flex items-center justify-center">
-      <img alt="ecommerce" @click.stop="zoomImg"  class=" object-cover object-bottom rounded" :class="[zoomOut ? 'h-60' : 'h-96']" :src="Product.image">
+      <img alt="ecommerce" @load="setImgSize" ref="image" @click.stop="zoomImg"  class=" object-cover object-bottom rounded" :class="[zoomOut ? 'h-60' : 'h-96']" :src="Product.image">
     </div>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
         <h2 class="text-sm title-font text-gray-500 tracking-widest">{{Product.category}}</h2>
@@ -108,16 +108,20 @@ export default {
       }
     },
     props: ['id'],
-    mounted() {
+    created() {
         this.$store.state.product = null
+        window.scrollTo(0, 0)
         return this.$store.dispatch('getProduct', this.id)
+       
     },
     computed: {
       Product() {
         return this.$store.state.product
+        
       },
-
+      
     },
+    
     methods: {
       addToCart() {
         this.notify = true;
@@ -130,10 +134,20 @@ export default {
           quantity: 1
         })
       },
+      setImgSize() {
+        let imgWidth = this.$refs.image.offsetWidth
+        let imgHeight = this.$refs.image.offsetHeight
+        if(imgWidth > imgHeight) {
+          this.zoomOut = true
+        }
+        
+      },
       zoomImg(){
         this.zoomOut = !this.zoomOut
+        
       }
-    }
+    },
+   
 }
 </script>
 
